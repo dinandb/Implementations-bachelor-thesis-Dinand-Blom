@@ -1,46 +1,54 @@
+
+import statistics
 from help_functions import *
-from verifier import SmartVerifier
 from prover import SmartProver
-
-u, C = find_corank1_pt_T()
-A = random_matrix(n)
-B = random_matrix(n)
-M = random_matrix(n)
-D = new_tensor_from_tensor_and_isomorphism(C, A, B, M)
-S = Tensor2.GaloisTensorMap(C)
-T = Tensor2.GaloisTensorMap(D)
-x = random_vector(n)
-y = random_vector(n)
-z = random_vector(n)
-
-LU, LV, LW = corank_1_to_3vector_tuples(u, C)
-LUD, LVD, LWD = corank_1_to_3vector_tuples(A.inverse()*u, D)
-
-f,g,h = create_fgh(create_phi_head(LU,LV,LW,Tensor2.GaloisTensorMap(C)))
-C_prime = new_tensor_from_tensor_and_isomorphism(C, LU*diagonal_matrix(f), LV*diagonal_matrix(g), LW*diagonal_matrix(h))
-U = Tensor2.GaloisTensorMap(C_prime)
-
-fD,gD,hD = create_fgh(create_phi_head(LUD,LVD,LWD,Tensor2.GaloisTensorMap(D)))
-
-C_prime_hyp = new_tensor_from_tensor_and_isomorphism(D, LUD*diagonal_matrix(fD), LVD*diagonal_matrix(gD), LWD*diagonal_matrix(hD))
-
-
-"""
-uses the verifier and prover classes
-"""
+from verifier import SmartVerifier
+import time
 
 prover = None
 verifier = None
 
-
 def init():
-    prover = SmartProver([random_matrix(n), random_matrix(n), random_matrix(n)], random_tensor(n))
-    verifier
+    prover = SmartProver([random_invertible_matrix(n), random_invertible_matrix(n), random_invertible_matrix(n)], random_tensor(n))
+    verifier = SmartVerifier(prover.C, prover.D)
 
-def one_iteration():
-    pass
+    return prover, verifier
+def n_iterations(prover, verifier, n):
+    successful_iterations = 0
+    times_0 = []
+    times_1 = []
+    for i in range(n):
+        start_time = time.perf_counter_ns()
+        # gen commit
+        commit = prover.generate_commit()
+        if commit is None:
+            print(f"Iteration {i} failed: commit generation returned None.")
+            continue
+        # send commit to verifier
+        challenge = verifier.accept_and_generate_challenge(commit)
+        # print("challenge = ", challenge)
+        # prover generates response
+        response = prover.generate_challenge_response(challenge)
+        # verifier verifies response
+        result = verifier.verify_response(response)
+        elapsed_time = time.perf_counter_ns() - start_time
+        print(f"succesful iteration {i} = {result}")
+        if result:
+            successful_iterations += 1
+            if challenge == 0:
+                times_0.append(elapsed_time)
+            else:
+                times_1.append(elapsed_time)
+    return successful_iterations, times_0, times_1
 
-
-def main():
-    init()
-    one_iteration()
+def main(n_its):
+    prover, verifier = init()
+    
+    successes, times_0, times_1 = n_iterations(prover, verifier, n_its)
+    # print("Total successful iterations:", successes)
+    # print(f"Percentage of successful iterations: {n_iterations(prover, verifier, n) / n * 100:.2f}%")
+    median_0 = statistics.median(times_0) if times_0 else None
+    median_1 = statistics.median(times_1) if times_1 else None
+    # print(f"Median time for challenge 0: {median_0}")
+    # print(f"Median time for challenge 1: {median_1}")
+    return successes, median_0, median_1

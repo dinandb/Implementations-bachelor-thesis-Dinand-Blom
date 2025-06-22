@@ -3,8 +3,8 @@ import numpy as np
 from sage.all import GF, vector, Matrix, diagonal_matrix
 import hashlib
 
-q = 421
-n = 8
+q = 8191
+n = 13
 
 
 F = GF(q)
@@ -24,6 +24,12 @@ def random_vector(n):
 
 def random_matrix(n):
     return Matrix([[F.random_element() for _ in range(n)] for _ in range(n)])
+
+def random_invertible_matrix(n):
+    while True:
+        M = random_matrix(n)
+        if M.is_invertible():
+            return M
 
 def random_tensor(n):
     return np.array([[[F.random_element() for _ in range(n)] for _ in range(n)] for _ in range(n)])
@@ -92,6 +98,33 @@ def tensor_equality(C, D):
     
     n = len(C)
     return not np.sum(np.array([[[1 if C[i][j][k]!=D[i][j][k] else 0 for k in range(n)] for j in range(n)] for i in range(n)]))
+
+def find_corank1_pt_for_tensor(D,n=n):
+    T = Tensor2.GaloisTensorMap(D)
+    # for _ in range(q**2):
+    isCorank1 = False
+    while not isCorank1:
+        
+        u = random_vector(n)
+        try:
+            v = T.find_v_for_zero_form(u, 0) # v is kernelvector of T.u (1, 2) over axis 2
+            
+            if np.array_equal(v, np.zeros(n)):
+                raise ValueError
+            
+            isCorank1 = True
+        
+        except ValueError:
+            # print(f"{u} was not corank1")
+            pass
+
+        if isCorank1:
+            pass
+            # print(f"{u} is corank1 voor tensor \n {D}")
+            # print(f"norm u: {normalize(u, n)}")
+            # print(f"found v: {v}")
+            
+    return u
 
 def corank_1_to_3vector_tuples(u, C, n=None, debugging=False, std_dir = True):
     std_dir = False
