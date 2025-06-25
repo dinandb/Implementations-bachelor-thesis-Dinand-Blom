@@ -28,6 +28,10 @@ where $F$ is a sage Galois Field object of size $q$, for $q$ some prime power, c
 
 `F = GF(q)`
 
+all sage functionalities can be imported as follows:
+
+`from sage import *`
+
 For random matrices and vectors we have similar functions. For tensor equality we have a function that checks that all entries of both tensors are equal.
 # Constructing new tensors
 In the case where we were given an $n^3$ tensor $C$ and a triplet of matrices $(A,B,M)$, and wanted to construct a new tensor $D$ such that $(C &rarr; D) = (A,B,M)$ we used the following definition given in section 2.2.
@@ -57,10 +61,9 @@ We want to show that if we send both $(N,E,F)$ and $(NA^{-1}, EB^{-1}, FM^{-1})$
 
 $$
 \begin{split}
-(NA^{-1}, EB^{-1}, FM^{-1})^{-1}\circ(N,E,F)
-&= ((NA^{-1})^{-1}, (EB^{-1})^{-1}, (FM^{-1})^{-1})\circ(N,E,F)
-&= (AN^{-1}, BE^{-1}, MF^{-1})\circ(N,E,F)
-&= (AN^{-1}N, BE^{-1}E, MF^{-1}F)
+(NA^{-1}, EB^{-1}, FM^{-1})^{-1}\circ(N,E,F) &= ((NA^{-1})^{-1}, (EB^{-1})^{-1}, (FM^{-1})^{-1})\circ(N,E,F)\\
+&= (AN^{-1}, BE^{-1}, MF^{-1})\circ(N,E,F)\\
+&= (AN^{-1}N, BE^{-1}E, MF^{-1}F)\\
 &= (A, B, C)
 \end{split}
 $$
