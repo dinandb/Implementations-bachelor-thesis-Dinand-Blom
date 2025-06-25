@@ -68,7 +68,7 @@ $$
 \end{split}
 $$
 
-by lemma \ref{lem:transinv} and \ref{lem:transcomp} from the research chapter. So, we already know that sending both transformations compromises the secret transformation.
+by the lemmas on compositions and inverses of tensor transformations from the research chapter. So, we already know that sending both transformations compromises the secret transformation.
 Now, we show it experimentally:
 ```
 # we are the attacker
@@ -111,7 +111,7 @@ sage: C_prime_hyp = new_tensor_from_tensor_and_isomorphism(D, LUD*diagonal_matri
 sage: tensor_equality(C_prime, C_prime_hyp)
 True
 ```
-We also show that both $C_{prime}$ and $C_{prime\_hyp}$ are 1 in the correct entries:
+We also show that both $C_{prime}$ and $C_{prime_hyp}$ are 1 in the correct entries:
 
 ```sage: C_prime
 array([[[0, 0, 0, 0, 0, 0, 0, 0],
