@@ -1,6 +1,7 @@
 ## Required: 
 
 SageMath 9.5+ (sudo apt install sagemath or sudo apt install sage, available for most major linux distributions, for ubuntu: only Ubuntu 18.04, 20.04, 22.04 supported)
+
 Python 3
 
 ## Syntax for tensors in python using sage
@@ -29,7 +30,7 @@ where $F$ is a sage Galois Field object of size $q$, for $q$ some prime power, c
 
 For random matrices and vectors we have similar functions. For tensor equality we have a function that checks that all entries of both tensors are equal.
 # Constructing new tensors
-In the case where we were given an $n^3$ tensor $C$ and a triplet of matrices $(A,B,C)$, and wanted to construct a new tensor $D$ such that $C &rarr D = (A,B,C)$ we used the following definition given in section 2.3.3.
+In the case where we were given an $n^3$ tensor $C$ and a triplet of matrices $(A,B,C)$, and wanted to construct a new tensor $D$ such that $C$ &rarr $D = (A,B,C)$ we used the following definition given in section 2.3.3.
 
 $$D[j] = \sum_{i=1}^n A[i,j]\cdot B^T\cdot C[i] \cdot C$$
 
