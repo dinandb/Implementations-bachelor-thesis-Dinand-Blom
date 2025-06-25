@@ -67,6 +67,15 @@ $$
 &= (A, B, C)
 \end{split}
 $$
+$$
+\begin{align}
+(NA^{-1}, EB^{-1}, FM^{-1})^{-1}\circ(N,E,F) 
+  &= ((NA^{-1})^{-1}, (EB^{-1})^{-1}, (FM^{-1})^{-1})\circ(N,E,F) \\
+  &= (AN^{-1}, BE^{-1}, MF^{-1})\circ(N,E,F) \\
+  &= (AN^{-1}N, BE^{-1}E, MF^{-1}F) \\
+  &= (A, B, C)
+\end{align}
+$$
 by lemma \ref{lem:transinv} and \ref{lem:transcomp} from the research chapter. So, we already know that sending both transformations compromises the secret transformation.
 Now, we show it experimentally:
 ```
