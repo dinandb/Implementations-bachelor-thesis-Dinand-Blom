@@ -1,4 +1,8 @@
-### Appendix
+## Required: 
+
+SageMath 9.5+ (sudo apt install sagemath or sudo apt install sage, available for most major linux distributions, for ubuntu: only Ubuntu 18.04, 20.04, 22.04 supported)
+Python 3
+
 ## Syntax for tensors in python using sage
 
 For experimental purposes of this thesis, python was used. To do calculations with tensors, like the tensordot operation, we use the *numpy* function *tensordot*.
@@ -15,11 +19,9 @@ To ensure that these operations respect field logic, we will use the useful and 
 For creating random $n^3$ tensors we use
 
 <pre>
-```
 def random_tensor(n):
-   **return np.array([[[F.random_element() for _ in range(n)] for _ in range(n)] for _ in range(n)])**
-```
-</pre>>
+   return np.array([[[F.random_element() for _ in range(n)] for _ in range(n)] for _ in range(n)])
+</pre>
 
 where $F$ is a sage Galois Field object of size $q$, for $q$ some prime power, created as follows:
 
