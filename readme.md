@@ -111,7 +111,7 @@ sage: C_prime_hyp = new_tensor_from_tensor_and_isomorphism(D, LUD*diagonal_matri
 sage: tensor_equality(C_prime, C_prime_hyp)
 True
 ```
-We also show that both $C_{prime}$ and $C_{prime_hyp}$ are 1 in the correct entries:
+We also show that both $C_{prime}$ and $C_{prime_ hyp}$ are 1 in the correct entries:
 
 ```sage: C_prime
 array([[[0, 0, 0, 0, 0, 0, 0, 0],
