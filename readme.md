@@ -30,7 +30,7 @@ where $F$ is a sage Galois Field object of size $q$, for $q$ some prime power, c
 
 all sage functionalities can be imported as follows:
 
-`from sage import *`
+`from sage.all import *`
 
 For random matrices and vectors we have similar functions. For tensor equality we have a function that checks that all entries of both tensors are equal.
 # Constructing new tensors
@@ -261,3 +261,4 @@ array([[[0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0]]], dtype=object)
 ```
 We see that both tensors are equal, and are 1 in the predetermined entries.
+
